@@ -6,8 +6,12 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Set;
 
 public class JpaMain {
 
@@ -20,17 +24,17 @@ public class JpaMain {
 
         try {
 
-            Member member1 = new Member();
-            member1.setUsername("member1");
-            em.persist(member1);
+            Member member = new Member();
+            member.setUsername("member1");
+            em.persist(member);
 
-            em.flush();
-            em.clear();
 
-            Member refMember = em.getReference(Member.class, member1.getId());
-            System.out.println("refMember=" + refMember.getClass()); // Proxy
-            refMember.getUsername();
-            Hibernate.initialize(refMember);
+            List<Member> resultList = em.createNamedQuery("select MEMBER_ID, city, street, zipcode, USERNAME from MEMBER", Member.class)
+                    .getResultList();
+
+            for (Member member1 : resultList) {
+                System.out.println("member1 = " + member1);
+            }
 
             tx.commit();
         } catch (Exception e) {
@@ -39,6 +43,8 @@ public class JpaMain {
         } finally {
             em.close();
         }
+
+
         emf.close();
     }
 }
