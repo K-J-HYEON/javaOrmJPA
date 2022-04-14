@@ -23,28 +23,32 @@ public class JpaMain {
         tx.begin();
 
         try {
+            Member member1 = new Member();
+            member1.setUsername("A");
 
-            Member member = new Member();
-            member.setUsername("member1");
-            em.persist(member);
+            Member member2 = new Member();
+            member1.setUsername("B");
 
+            Member member3 = new Member();
+            member1.setUsername("C");
 
-            List<Member> resultList = em.createNamedQuery("select MEMBER_ID, city, street, zipcode, USERNAME from MEMBER", Member.class)
-                    .getResultList();
+            System.out.println("=================");
 
-            for (Member member1 : resultList) {
-                System.out.println("member1 = " + member1);
-            }
+            em.persist(member1); // 1, 51
+            em.persist(member2); // MEMORY
+            em.persist(member3); // MEMORY
+
+            System.out.println("member1 = " + member1.getId());
+            System.out.println("member2 = " + member2.getId());
+            System.out.println("member3 = " + member3.getId());
+            System.out.println("=================");
 
             tx.commit();
         } catch (Exception e) {
             tx.rollback();
-            e.printStackTrace();
         } finally {
             em.close();
         }
-
-
         emf.close();
     }
 }
