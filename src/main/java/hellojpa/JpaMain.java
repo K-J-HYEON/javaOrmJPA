@@ -26,6 +26,7 @@ public class JpaMain {
             member.setUsername("member1");
             // 이렇게 해주면 JPA가 알아서 PK값을 team에서 꺼내서 FK값에 insert해준다.
             member.setTeam(team);
+
             em.persist(member);
 
             em.flush();

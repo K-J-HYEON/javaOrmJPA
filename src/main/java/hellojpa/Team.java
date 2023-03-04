@@ -8,14 +8,13 @@ import java.util.List;
 @Entity
 public class Team extends BaseEntity{
 
-    @Id
-    @GeneratedValue
+    @Id @GeneratedValue
     @Column(name = "TEAM_ID")
     private Long id;
     private String name;
 
-    @OneToMany
-    @JoinColumn(name = "TEAM_ID")
+    // arrayList로 초기화
+    @OneToMany(mappedBy = "team")
     private List<Member> members = new ArrayList<>();
 
     public Long getId() {
@@ -34,11 +33,11 @@ public class Team extends BaseEntity{
         this.name = name;
     }
 
-    public List<Member> getMembers() {
+    public List<hellojpa.Member> getMembers() {
         return members;
     }
 
-    public void setMembers(List<Member> members) {
+    public void setMembers(List<hellojpa.Member> members) {
         this.members = members;
     }
 }

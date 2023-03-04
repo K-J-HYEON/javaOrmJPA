@@ -14,7 +14,7 @@ public class Parent {
 
     @OneToMany(mappedBy = "parent", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Child> childList = new ArrayList<>();
-
+    
     public List<Child> getChildList() {
         return childList;
     }
